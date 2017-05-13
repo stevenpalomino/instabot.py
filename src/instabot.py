@@ -145,11 +145,13 @@ class InstaBot:
         self.unfollow_whitelist = unfollow_whitelist
         self.comment_list = comment_list
 
-        self.time_in_day = 24 * 60 * 60
+        #Formula to distribute likes in a day. Default (24 * 60 * 60) 
+        #Distributes throughout the day, we want all at once for a max of 60 then end script
+        self.time_in_day = 20
         # Like
         self.like_per_day = like_per_day
         if self.like_per_day != 0:
-            self.like_delay = self.time_in_day / self.like_per_day
+            self.like_delay = 0
 
         # Follow
         self.follow_time = follow_time
@@ -418,6 +420,9 @@ class InstaBot:
                                                  (self.media_by_tag[i]['id'],
                                                   self.like_counter)
                                     self.write_log(log_string)
+                                    if self.like_counter == self.like_per_day:
+                                        sys.exit()
+                                        pass
                                 elif like.status_code == 400:
                                     log_string = "Not liked: %i" \
                                                  % (like.status_code)

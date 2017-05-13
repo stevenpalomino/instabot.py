@@ -13,19 +13,14 @@ from instabot import InstaBot
 from unfollow_protocol import unfollow_protocol
 
 bot = InstaBot(
-    login="username",
-    password="password",
-    like_per_day=1000,
+    login="stevenpalominomarketing",
+    password="Pickone1!",
+    like_per_day=5,
     comments_per_day=0,
-    tag_list=['follow4follow', 'f4f', 'cute'],
+    tag_list=['cycling', 'cat', 'dog'],
     tag_blacklist=['rain', 'thunderstorm'],
     user_blacklist={},
-    max_like_for_one_tag=50,
-    follow_per_day=300,
-    follow_time=1 * 60,
-    unfollow_per_day=300,
-    unfollow_break_min=15,
-    unfollow_break_max=30,
+    max_like_for_one_tag=3,
     log_mod=0,
     proxy='',
     # Use unwanted_username_list to block usernames containing a string
