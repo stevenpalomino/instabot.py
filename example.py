@@ -13,18 +13,32 @@ from follow_protocol import follow_protocol
 from instabot import InstaBot
 from unfollow_protocol import unfollow_protocol
 
+e = ''
+username = ""
+password = ""
+
 def main():
     lines = sys.stdin.readlines()
     lines = lines[0]
     e = json.loads(lines)
-    print e
+    # print e["username"]
+    global username
+    global password
+    username = e["username"]
+    password = e["password"]
     scripty()
 
 def scripty():
         bot = InstaBot(
 
-        login="stevenpalominomarketing",
-        password="Pickone1!",
+        # lines = sys.stdin.readlines()
+        # lines = json.loads(lines[0])
+        # lines = lines[0]
+        # e = json.loads(lines)
+        # print e['password']
+        # username = username + e["username"]
+        login=username,
+        password=password,
         like_per_day=5,
         comments_per_day=0,
         tag_list=['cycling', 'cat', 'dog'],

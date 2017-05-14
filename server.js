@@ -35,9 +35,9 @@ app.post('/api/test', function (req, res){
 
 var pyshell = new PythonShell('example.py')
 var jsonReq = req.body
-console.log("wut: "+jsonReq)
+//console.log("wut: "+jsonReq)
 if (!req.body) return res.sendStatus(400)
-console.log("res: "+req.body)
+//console.log("res: "+req.body)
 pyshell.send(JSON.stringify(jsonReq));
 
 pyshell.on('message', function (message) {
