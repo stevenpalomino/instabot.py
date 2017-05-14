@@ -14,14 +14,14 @@ var mongoose = require('mongoose')
 
 var PythonShell = require('python-shell')
 
-mongoose.connect('mongodb://localhost/drinks')
-var db = mongoose.connection
+// mongoose.connect('mongodb://localhost/drinks')
+// var db = mongoose.connection
 
-app.get('/api/beers', function (req, res){
-	db.collection('beer').find().toArray(function(err, results){
-		res.json(results)
-	})
-})
+// app.get('/api/beers', function (req, res){
+// 	db.collection('beer').find().toArray(function(err, results){
+// 		res.json(results)
+// 	})
+// })
 
 app.post('/api/services', function (req, res){
 	// db.collection('beer').find().toArray(function(err, results){
@@ -57,35 +57,35 @@ pyshell.end(function (err) {
 
 })
 
-app.get('/api/script', function (req, res){
-	//console.log('script')
-	var spawn = require("child_process").spawn
-	var process = spawn('python', ['example.py'])
-	var data = '{"username": "stevenpalominomarketing", "password": "Pickone1!"}'
-	//var stringified = JSON.stringify(data)
-	dataString = ''
+// app.get('/api/script', function (req, res){
+// 	//console.log('script')
+// 	var spawn = require("child_process").spawn
+// 	var process = spawn('python', ['example.py'])
+// 	var data = '{"username": "stevenpalominomarketing", "password": "Pickone1!"}'
+// 	//var stringified = JSON.stringify(data)
+// 	dataString = ''
 
-	//res.send("hello")
-	process.stdout.on('data', function(data){
-		//print("from js: " + data)
-		dataString += data.toString()
-		console.log('back from script')
-		//console.log(data)
-		//res.send(data.json)
-	})
-	process.stdout.on('end', function(){
-		console.log('end script')
-		console.log(dataString)
-		res.send(dataString)
-	})
+// 	//res.send("hello")
+// 	process.stdout.on('data', function(data){
+// 		//print("from js: " + data)
+// 		dataString += data.toString()
+// 		console.log('back from script')
+// 		//console.log(data)
+// 		//res.send(data.json)
+// 	})
+// 	process.stdout.on('end', function(){
+// 		console.log('end script')
+// 		console.log(dataString)
+// 		res.send(dataString)
+// 	})
 
-	process.stdin.write(data)
-	process.stdin.end()
+// 	process.stdin.write(data)
+// 	process.stdin.end()
 
-	// db.collection('beer').find().toArray(function(err, results){
-	// 	res.json(results)
-	// })
-})
+// 	// db.collection('beer').find().toArray(function(err, results){
+// 	// 	res.json(results)
+// 	// })
+// })
 
 
 
