@@ -54,43 +54,11 @@ pyshell.on('message', function (message) {
 pyshell.end(function (err) {
     
     console.log('finished');
+	res.send("Success")
+
 });
-// PythonShell.run('example.py', function (err) {
-//   if (err) throw err;
-//   console.log('finished');
-// });
 
 })
-
-// app.get('/api/script', function (req, res){
-// 	//console.log('script')
-// 	var spawn = require("child_process").spawn
-// 	var process = spawn('python', ['example.py'])
-// 	var data = '{"username": "stevenpalominomarketing", "password": "Pickone1!"}'
-// 	//var stringified = JSON.stringify(data)
-// 	dataString = ''
-
-// 	//res.send("hello")
-// 	process.stdout.on('data', function(data){
-// 		//print("from js: " + data)
-// 		dataString += data.toString()
-// 		console.log('back from script')
-// 		//console.log(data)
-// 		//res.send(data.json)
-// 	})
-// 	process.stdout.on('end', function(){
-// 		console.log('end script')
-// 		console.log(dataString)
-// 		res.send(dataString)
-// 	})
-
-// 	process.stdin.write(data)
-// 	process.stdin.end()
-
-// 	// db.collection('beer').find().toArray(function(err, results){
-// 	// 	res.json(results)
-// 	// })
-// })
 
 
 
