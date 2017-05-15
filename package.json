@@ -10,9 +10,10 @@
   "author": "Steven Palomino",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "*",
     "express": "^4.15.2",
-    "mongodb": "^2.2.26", 
-    "body-parser":"*", 
-    "mongoose":"*"
+    "kue": "^0.11.5",
+    "mongodb": "^2.2.26",
+    "mongoose": "*"
   }
 }

@@ -2,7 +2,9 @@ var http = require('http');
 var express = require('express')
 var app = express()
 var bodyParser = require('body-parser')
-// parse application/x-www-form-urlencoded
+var kue = require('kue')
+var queue = kue.createQueue() // parse application/x-www-form-urlencoded
+
 app.use(bodyParser.urlencoded({ extended: false }))
 
 // parse application/json
@@ -38,6 +40,8 @@ app.post('/api/services', function (req, res){
 
 app.post('/api/test', function (req, res){
 
+
+
 var pyshell = new PythonShell('example.py')
 var jsonReq = req.body
 //console.log("wut: "+jsonReq)
@@ -65,7 +69,8 @@ pyshell.end(function (err) {
 
 
 app.listen(8080, function(){
-	console.log('Example app listening on port 8080')
+	console.log('Example app listening: Iteration v. 1.0')
+	// v. 1.0 - working script on server without automation
 })
 
 
