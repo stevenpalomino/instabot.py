@@ -23,6 +23,11 @@ var PythonShell = require('python-shell')
 // 	})
 // })
 
+app.get('/', function (req, res){
+	console.log(req.body)
+	res.send("<h1>InstaLikerPlus API</h1>")
+})
+
 app.post('/api/services', function (req, res){
 	// db.collection('beer').find().toArray(function(err, results){
 	// 	res.json(results)
