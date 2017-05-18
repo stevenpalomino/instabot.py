@@ -38,8 +38,28 @@ app.post('/api/services', function (req, res){
 	res.send(req.body)
 })
 
-app.post('/api/test', function (req, res){
+// ~~~~~~~~~~~~~~ TEST ~~~~~~~~~~~~~~
+app.post('/api/script', function (req, res){
 
+var username = req.body.username
+var password = req.body.password
+const job = queue.create('script', {
+	//data
+	'username':username,
+	'password':password
+}).save( function(err){
+	console.log('const job queue create script: ' + req.body.username + " " + req.body.password)
+	if (err){
+		console.log('${job.id} error');
+	}else{
+		//process.exit(0)
+	}	
+})
+
+})
+
+
+app.post('/api/test', function (req, res){
 
 
 var pyshell = new PythonShell('example.py')
@@ -68,7 +88,7 @@ pyshell.end(function (err) {
 
 
 
-app.listen(8080, function(){
+app.listen(8081, function(){
 	console.log('Example app listening: Iteration v. 1.0')
 	// v. 1.0 - working script on server without automation
 })

@@ -16,11 +16,29 @@ from unfollow_protocol import unfollow_protocol
 e = ''
 username = ""
 password = ""
+communication = ""
 
 def main():
-    lines = sys.stdin.readlines()
-    lines = lines[0]
-    e = json.loads(lines)
+    print("beginning of main")
+    for line in sys.stdin:
+        communication = line[:-1]
+        print json.dumps(json.loads(line))
+
+    #lines = sys.stdin.readlines()
+    #print('lines')
+    #lines = lines[0]
+    print('lines2')
+    print(communication)
+    print type(communication)
+    e = json.loads(communication)
+    #print json.dumps(e)
+    print("example.py here! 5")
+    #e = json.loads(communication)
+    #print(e)
+    #print(e["username"])
+    print("example.py here! 6")
+
+
     # print e["username"]
     global username
     global password
