@@ -42,13 +42,11 @@ const kue = require('kue')
 	//console.log("wut: "+jsonReq)
 	//if (!data.body) return data.sendStatus(400)
 	//console.log("res: "+req.body)
-	console.log(JSON.stringify(data));
 	console.log(data);
 	pyshell.send(JSON.stringify(data));
 
 	pyshell.on('message', function (message) {
 	    // received a message sent from the Python script (a simple "print" statement)
-	    console.log('Receivced a message from Py');
 	    console.log(message);
 	});
 

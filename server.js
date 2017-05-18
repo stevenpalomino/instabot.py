@@ -47,16 +47,34 @@ const job = queue.create('script', {
 	//data
 	'username':username,
 	'password':password
-}).save( function(err){
-	console.log('const job queue create script: ' + req.body.username + " " + req.body.password)
-	if (err){
-		console.log('${job.id} error');
-	}else{
-		//process.exit(0)
-	}	
-})
+});
+// save( function(err){
+ 	console.log('~~~~~ const job queue create script: ' + req.body.username + " " + req.body.password)
+// 	if (err){
+// 		console.log('${job.id} error');
+// 	}else{
+// 		res.send("Success")
+// 		console.log('success')
+// 		res.end()
+// 		process.exit(0)
+// 	}	
+// })
+	console.log('success2')
+
+job.on('complete', function(){
+	console.log('job complete')
+ 		res.send("Success")
+// 		console.log('success')
+ 		res.end()
+// 		process.exit(0)
+}).on('failed', function(){
+	console.log("job failed")
+});
+job.save();
 
 })
+
+
 
 
 app.post('/api/test', function (req, res){
@@ -79,6 +97,7 @@ pyshell.end(function (err) {
     
     console.log('finished');
 	res.send("Success")
+
 
 });
 

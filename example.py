@@ -24,22 +24,9 @@ def main():
         communication = line[:-1]
         print json.dumps(json.loads(line))
 
-    #lines = sys.stdin.readlines()
-    #print('lines')
-    #lines = lines[0]
-    print('lines2')
-    print(communication)
-    print type(communication)
+
     e = json.loads(communication)
-    #print json.dumps(e)
-    print("example.py here! 5")
-    #e = json.loads(communication)
-    #print(e)
-    #print(e["username"])
-    print("example.py here! 6")
 
-
-    # print e["username"]
     global username
     global password
     username = e["username"]
@@ -57,9 +44,9 @@ def scripty():
         # username = username + e["username"]
         login=username,
         password=password,
-        like_per_day=5,
+        like_per_day=1,
         comments_per_day=0,
-        tag_list=['cycling', 'cat', 'dog'],
+        tag_list=['cycling'],
         tag_blacklist=['rain', 'thunderstorm'],
         user_blacklist={},
         max_like_for_one_tag=3,
