@@ -47,7 +47,8 @@ const job = queue.create('script', {
 	//data
 	'username':username,
 	'password':password
-});
+}).removeOnComplete(true).save()
+
 // save( function(err){
  	console.log('~~~~~ const job queue create script: ' + req.body.username + " " + req.body.password)
 // 	if (err){
@@ -63,15 +64,18 @@ const job = queue.create('script', {
 
 job.on('complete', function(){
 	console.log('job complete')
- 		res.send("Success")
+	//res.send("Success save")
+	//res.end()
+ 		//res.send("Success")
 // 		console.log('success')
- 		res.end()
+// 		res.end()
 // 		process.exit(0)
 }).on('failed', function(){
 	console.log("job failed")
-});
-job.save();
-
+})
+job.removeOnComplete(true).save();
+	res.send("Success save")
+	res.end()
 })
 
 

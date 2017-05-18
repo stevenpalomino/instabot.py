@@ -54,6 +54,8 @@ const kue = require('kue')
 	pyshell.end(function (err) {
 	    
 	    console.log('finished');
+		callback(null)
+		process.exit(0)
 		//data.send("Success")
 
 	});
