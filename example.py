@@ -13,24 +13,34 @@ from follow_protocol import follow_protocol
 from instabot import InstaBot
 from unfollow_protocol import unfollow_protocol
 
-e = ''
-username = ""
-password = ""
-communication = ""
+
 
 def main():
-    print("beginning of main")
-    for line in sys.stdin:
-        communication = line[:-1]
-        print json.dumps(json.loads(line))
+    e = ''
+    global communication
+    communication = ""
 
-
-    e = json.loads(communication)
+    print("Running script")
+    #print (sys.argv[1])
+    #for line in sys.argv[1]:
+        #communication = line[:-1]
+        #print json.dumps(json.loads(line))
+    e = json.loads(sys.argv[1])
+    #print(json.dumps(json.loads(e)))
+    #print(json.dumps(e["username"]))
+    #e = json.loads(sys.argv[1])
+    #print(e)
 
     global username
     global password
+    global hashtags
+    global rate
     username = e["username"]
     password = e["password"]
+    hashtags = e["hashtags"]
+    rate = e["rate"]
+    #print(hashtags)
+    #print(rate)
     scripty()
 
 def scripty():
@@ -44,9 +54,9 @@ def scripty():
         # username = username + e["username"]
         login=username,
         password=password,
-        like_per_day=1,
+        like_per_day=rate,
         comments_per_day=0,
-        tag_list=['cycling'],
+        tag_list=hashtags,
         tag_blacklist=['rain', 'thunderstorm'],
         user_blacklist={},
         max_like_for_one_tag=3,

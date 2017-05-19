@@ -13,6 +13,7 @@
     "body-parser": "*",
     "express": "^4.15.2",
     "kue": "^0.11.5",
+    "kue-scheduler": "^0.7.2",
     "mongodb": "^2.2.26",
     "mongoose": "*"
   }

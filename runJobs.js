@@ -13,20 +13,28 @@ var jsonParser = bodyParser.json()
 var mongoose = require('mongoose')
 
 var PythonShell = require('python-shell')
-var pyshell = new PythonShell('example.py',{
-	mode:'text'
+
+
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://localhost/test_user')
+var db = mongoose.connection;
+var User;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function(){
+	User = require('./models/User.js')
 })
 
 const kue = require('kue')
  , queue = kue.createQueue()
 
- queue.process('script', (job, done) => {
+ queue.process('script', 10, (job, done) => {
  	script(job.data, (err) => {
  		if(err){
  			console.log('Process job @{job.id} error: ${err} !!!')
  			done(err)
  		}else{
  			console.log('Process job ${job.id} success')
+ 			console.log(job.id)
  			done()
  		}
  	})
@@ -36,29 +44,69 @@ const kue = require('kue')
 
  	//actual work
 	var jsonReq = data.body
- 	console.log('Working 2')
- 	console.log(data.username)
+ 	console.log('Processing job...')
+ 	//console.log(data.expiryKey)
 
-	//console.log("wut: "+jsonReq)
-	//if (!data.body) return data.sendStatus(400)
-	//console.log("res: "+req.body)
-	console.log(data);
-	pyshell.send(JSON.stringify(data));
-
-	pyshell.on('message', function (message) {
-	    // received a message sent from the Python script (a simple "print" statement)
-	    console.log(message);
+	User.update({username:data.username}, {$set:{jobExpiryKey:data.expiryKey}}, function(err, resultUser){
+		if (err) {
+			console.log(err)
+		}else{
+		console.log('updated user expiry key')
+		};
 	});
 
-	// end the input stream and allow the process to exit
-	pyshell.end(function (err) {
-	    
-	    console.log('finished');
-		callback(null)
-		process.exit(0)
-		//data.send("Success")
+	var oneUser
+	User.find({username:data.username}, function (err, person){
+		console.log('~~~one person: ')
+		oneUser = person[0]
+		console.log(oneUser["username"])
 
-	});
 
- 	callback(null)
+		if (oneUser.likes > 0) {
+		// Only run the script if user has likes available, give "free" likes up to rate
+		// "restart" likes when user buys instead of adding to negative
+			//console.log(oneUser);
+			console.log('sending python data...');
+			var options = {
+		 		mode: 'text',
+		  		args: JSON.stringify(oneUser)
+			};
+
+			pyshell = new PythonShell('example.py', options);
+			PythonShell.run('example.py', options, function (err, results){
+			if (err){
+				console.log('~~ Error: '+err)
+			};
+
+			console.log('Done with script');
+
+			})
+
+
+			pyshell.on('message', function (message) {
+			    // received a message sent from the Python script (a simple "print" statement)
+			    //console.log('message received!');
+			    console.log(message);
+			});
+
+			pyshell.end(function (err) {
+			  	//if (err) throw err;
+			  	newLikes = oneUser.likes - oneUser.rate
+				User.update(oneUser, {$set:{likes:newLikes}}, function(err, resultUser){
+					if (err) {
+						console.log(err)
+					}else{
+						console.log('updated user likes')
+						console.log(oneUser)
+						console.log('finished');
+						callback(null)
+					};
+				});
+			  
+			});
+		}
+		}) //end of User.find
+
+	
+
  }
