@@ -51,7 +51,7 @@ const kue = require('kue')
 		if (err) {
 			console.log(err)
 		}else{
-		console.log('updated user expiry key')
+			console.log('updated user expiry key')
 		};
 	});
 

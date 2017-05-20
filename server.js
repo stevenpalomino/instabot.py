@@ -87,7 +87,87 @@ app.get('/api/getUsersInfo', function (req, res){
 
 	})
 
-	console.log("******")
+	console.log("Get user info")
+})
+
+app.post('/api/login', function (req, res){
+// check username/password
+var username = req.body.username
+var password = req.body.password
+var hashtags = req.body.hashtags
+var rate = req.body.rate
+var likes = req.body.likes
+
+console.log('sending python data...');
+var options = {
+		mode: 'text',
+		args: JSON.stringify(req.body)
+};
+
+pyshell = new PythonShell('loginChecker.py', options);
+PythonShell.run('loginChecker.py', options, function (err, results){
+if (err){
+	console.log('~~ Error: '+err)
+};
+
+	//console.log('Done with script');
+	//console.log('done '+results[results.length-1])
+	message = results[results.length-1]
+	if (message == 444) {
+    	// wrong creds
+    	console.log("444 messager")
+    	res.sendStatus(444)
+    }else if(message == 443){
+    	// connection issue
+    	console.log("443 message")
+    	sendStatus(443)
+    }else if(message == 200){
+    	//success
+    	console.log("200 message")
+    	res.sendStatus(200)
+    }else{
+    	//console.log("any other message")
+    };
+})
+
+
+pyshell.on('message', function (message) {
+    // received a message sent from the Python script (a simple "print" statement)
+    //console.log('message received!');
+    // if (message === 444) {
+    // 	// wrong creds
+    // 	console.log("444 messager")
+    // 	res.sendStatus(444)
+    // 	res.send("done")
+    // 	Response.end()
+    // }else if(message === 443){
+    // 	// connection issue
+    // 	console.log("443 message")
+    // 	sendStatus(443)
+    // }else if(message === 200){
+    // 	//success
+    // 	res.sendStatus(200)
+    // 	res.end()
+    // 	console.log("200 message")
+    // }else{
+    // 	//console.log("any other message")
+    // };
+    console.log(message);
+});
+
+pyshell.end(function (err) {
+  	//if (err) throw err;
+  	//newLikes = oneUser.likes - oneUser.rate
+  	if (err) {
+  		console.log("error end: "+err)
+  	}else{
+  		//callback(null)
+  		//console.log("end")
+  	}
+  
+});
+
+
 })
 
 
