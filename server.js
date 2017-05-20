@@ -25,21 +25,15 @@ db.once('open', function(){
 })
 
 
-// app.get('/api/beers', function (req, res){
-// 	db.collection('beer').find().toArray(function(err, results){
-// 		res.json(results)
-// 	})
-// })
 
 app.get('/', function (req, res){
 	//console.log(req.body)
 	res.send("<h1>InstaLikerPlus API</h1>")
 })
 
-app.post('/api/createUser', function (req, res){
-	console.log(req.body.likes)
 
-	
+app.post('/api/createUser', function (req, res){
+	// new user sign up create listing in db
 	var newUser = new User({
 		username: req.body.username,
 		password: req.body.password, 
@@ -57,8 +51,6 @@ app.post('/api/createUser', function (req, res){
 
 	console.log("~~~")
 	res.sendStatus(200)
-	//console.log(User)
-	//res.send("<h1>InstaLikerPlus API</h1>")
 })
 
 app.put('/api/updateUser', function (req, res){
@@ -85,7 +77,7 @@ app.put('/api/updateUser', function (req, res){
 })
 
 
-app.get('/api/getUsers', function (req, res){
+app.get('/api/getUsersInfo', function (req, res){
 	//console.log(req.body)
 	User.find({}, function(err, users){
 		if (err) throw err;
@@ -96,21 +88,13 @@ app.get('/api/getUsers', function (req, res){
 	})
 
 	console.log("******")
-	//console.log(User)
-	//res.send("<h1>InstaLikerPlus API</h1> <br>"+users)
 })
 
-app.post('/api/services', function (req, res){
-	// db.collection('beer').find().toArray(function(err, results){
-	// 	res.json(results)
-	// })
-	console.log(req.body)
-	res.send(req.body)
-})
 
-// ~~~~~~~~~~~~~~ TEST ~~~~~~~~~~~~~~
+// ~~~~~~~~~~~~~~ MAIN SCRIPT ENDPOINT ~~~~~~~~~~~~~~
 app.post('/api/script', function (req, res){
-
+// run script with created user, also resume job if deleted with /deleteaJob
+// req must include empty expiryKey for script to run
 var username = req.body.username
 var password = req.body.password
 var hashtags = req.body.hashtags
@@ -181,40 +165,17 @@ app.post('/api/deleteJob', function (req, res){
 
 })
 
-app.post('/api/test', function (req, res){
 
-
-var pyshell = new PythonShell('example.py')
-var jsonReq = req.body
-//console.log("wut: "+jsonReq)
-if (!req.body) return res.sendStatus(400)
-//console.log("res: "+req.body)
-pyshell.send(JSON.stringify(jsonReq));
-
-pyshell.on('message', function (message) {
-    // received a message sent from the Python script (a simple "print" statement)
-    console.log(message);
-});
-
-// end the input stream and allow the process to exit
-pyshell.end(function (err) {
-    
-    console.log('finished');
-	res.sendStatus("Success")
-
-
-});
-
-})
 
 
 
 
 
 app.listen(8081, function(){
-	console.log('Example app listening: Iteration v. 1.0.1')
+	console.log('Example app listening: Iteration v. 1.1')
 	// v. 1.0 - working script on server without automation
 	// v. 1.0.1 - some automation
+	// v. 1.1 - automation works
 })
 
 
