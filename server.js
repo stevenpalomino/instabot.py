@@ -94,9 +94,9 @@ app.post('/api/login', function (req, res){
 // check username/password
 var username = req.body.username
 var password = req.body.password
-var hashtags = req.body.hashtags
-var rate = req.body.rate
-var likes = req.body.likes
+// var hashtags = req.body.hashtags
+// var rate = req.body.rate
+// var likes = req.body.likes
 
 console.log('sending python data...');
 var options = {

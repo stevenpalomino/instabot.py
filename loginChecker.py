@@ -42,12 +42,12 @@ def main():
 
     global username
     global password
-    global hashtags
-    global rate
+    #global hashtags
+    #global rate
     username = e["username"]
     password = e["password"]
-    hashtags = e["hashtags"]
-    rate = e["rate"]
+    #hashtags = e["hashtags"]
+    #rate = e["rate"]
     #print(hashtags)
     #print(rate)
     #print(username)
