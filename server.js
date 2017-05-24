@@ -76,6 +76,23 @@ app.put('/api/updateUser', function (req, res){
 	})
 })
 
+app.post('/api/getUserInfo', function (req, res){
+	var newUser = new User({
+		username: req.body.username,
+		password: req.body.password, 
+		hashtags: req.body.hashtags,
+		rate: req.body.rate,
+		likes: req.body.likes
+	})
+
+	User.find({username:req.body.username}, function (err, person){
+		currentUser = person[0]
+		console.log(currentUser)
+		res.send(currentUser)
+
+	})
+
+})
 
 app.get('/api/getUsersInfo', function (req, res){
 	//console.log(req.body)
@@ -251,7 +268,7 @@ app.post('/api/deleteJob', function (req, res){
 
 
 
-app.listen(8081, function(){
+app.listen(8080, function(){
 	console.log('Example app listening: Iteration v. 1.1')
 	// v. 1.0 - working script on server without automation
 	// v. 1.0.1 - some automation
