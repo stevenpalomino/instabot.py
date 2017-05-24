@@ -209,7 +209,7 @@ var likes = req.body.likes
 				'rate':rate,
 				'likes':likes
 			}).attempts(1).priority('normal');
-			queue.every('2 minutes', job);
+			queue.every('60 minutes', job);
 			console.log("expiry: "+job.expiry);
 			//queue.now(job);
 
