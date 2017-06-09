@@ -8,7 +8,8 @@ var userSchema = new Schema({
   hashtags: [],
   rate: Number,
   likes: Number,
-  jobExpiryKey: String
+  jobExpiryKey: String,
+  lastRun: Number
 });
 
 // the schema is useless so far

@@ -87,7 +87,8 @@ app.post('/api/getUserInfo', function (req, res){
 		password: req.body.password, 
 		hashtags: req.body.hashtags,
 		rate: req.body.rate,
-		likes: req.body.likes
+		likes: req.body.likes,
+		lastRun: req.body.lastRun
 	})
 
 	User.find({username:req.body.username}, function (err, person){
