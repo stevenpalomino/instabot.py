@@ -46,9 +46,8 @@ const kue = require('kue')
 	var jsonReq = data.body
  	console.log('Processing job...')
  	//console.log(data.expiryKey)
-	var timestamp = Math.round(new Date().getTime()/1000)
 
-	User.update({username:data.username}, {$set:{jobExpiryKey:data.expiryKey, lastRun:timestamp}}, function(err, resultUser){
+	User.update({username:data.username}, {$set:{jobExpiryKey:data.expiryKey}}, function(err, resultUser){
 		if (err) {
 			console.log(err)
 		}else{
@@ -92,7 +91,8 @@ const kue = require('kue')
 			pyshell.end(function (err) {
 			  	//if (err) throw err;
 			  	newLikes = oneUser.likes - oneUser.rate
-				User.update(oneUser, {$set:{likes:newLikes}}, function(err, resultUser){
+			  	var timestamp = Math.round(new Date().getTime()/1000)
+				User.update(oneUser, {$set:{likes:newLikes, lastRun:timestamp}}, function(err, resultUser){
 					if (err) {
 						console.log(err)
 					}else{
