@@ -46,7 +46,7 @@ const kue = require('kue')
 	var jsonReq = data.body
  	console.log('Processing job...')
  	//console.log(data.expiryKey)
-
+  	var timestamp = Math.round(new Date().getTime()/1000)
 	User.update({username:data.username}, {$set:{jobExpiryKey:data.expiryKey, lastRun:timestamp}}, function(err, resultUser){
 		if (err) {
 			console.log(err)
