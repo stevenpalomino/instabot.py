@@ -277,6 +277,7 @@ class InstaBot:
                 self.write_log(log_string)
             else:
                 self.login_status = False
+                print('Login error. Check your login data!')
                 self.write_log('Login error! Check your login data!')
         else:
             self.write_log('Login error! Connection error!')
@@ -405,9 +406,9 @@ class InstaBot:
                                     "Couldn't find caption - not liking")
                                 return False
 
-                            log_string = "Trying to like media: %s" % \
-                                         (self.media_by_tag[i]['id'])
-                            self.write_log(log_string)
+                            # log_string = "Trying to like media: %s" % \
+                            #              (self.media_by_tag[i]['id'])
+                            # self.write_log(log_string)
                             like = self.like(self.media_by_tag[i]['id'])
                             # comment = self.comment(self.media_by_tag[i]['id'], 'Cool!')
                             # follow = self.follow(self.media_by_tag[i]["owner"]["id"])
@@ -419,7 +420,7 @@ class InstaBot:
                                     log_string = "Liked: %s. Like #%i." % \
                                                  (self.media_by_tag[i]['id'],
                                                   self.like_counter)
-                                    self.write_log(log_string)
+                                    #self.write_log(log_string)
                                     if self.like_counter == self.like_per_day:
                                         sys.exit()
                                         pass

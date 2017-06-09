@@ -30,11 +30,11 @@ const kue = require('kue')
  queue.process('script', 10, (job, done) => {
  	script(job.data, (err) => {
  		if(err){
- 			console.log('Process job @{job.id} error: ${err} !!!')
+ 			console.log('error processing ' + job.id)
  			done(err)
  		}else{
- 			console.log('Process job ${job.id} success')
- 			console.log(job.id)
+ 			console.log('Process job success ' + job.id)
+ 			// console.log(job.id)
  			done()
  		}
  	})
@@ -97,8 +97,8 @@ const kue = require('kue')
 						console.log(err)
 					}else{
 						console.log('updated user likes')
-						console.log(oneUser)
-						console.log('finished');
+						// console.log(oneUser)
+						// console.log('finished');
 						callback(null)
 					};
 				});

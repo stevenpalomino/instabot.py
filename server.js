@@ -77,6 +77,7 @@ app.put('/api/updateUser', function (req, res){
 })
 
 app.post('/api/getUserInfo', function (req, res){
+	//takes username and returns user data
 	var newUser = new User({
 		username: req.body.username,
 		password: req.body.password, 
@@ -227,7 +228,8 @@ var likes = req.body.likes
 				console.log("job failed")
 			})
 			job.removeOnComplete(true).save();
-			res.send("Success save")
+			res.json({success : "Saved Successfully", status : 200});
+			//res.send("Success save")
 			res.end()
 		}
 	})
