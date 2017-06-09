@@ -47,7 +47,7 @@ const kue = require('kue')
  	console.log('Processing job...')
  	//console.log(data.expiryKey)
 
-	User.update({username:data.username}, {$set:{jobExpiryKey:data.expiryKey}}, function(err, resultUser){
+	User.update({username:data.username}, {$set:{jobExpiryKey:data.expiryKey, lastRun:timestamp}}, function(err, resultUser){
 		if (err) {
 			console.log(err)
 		}else{
