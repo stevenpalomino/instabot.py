@@ -50,11 +50,14 @@ app.post('/api/createUser', function (req, res){
 	})
 
 	console.log("~~~")
-	res.sendStatus(200)
+	res.json({success : "Created Successfully", status : 200});
+
 })
 
 app.put('/api/updateUser', function (req, res){
-	//console.log(req.body.likes)	
+	//console.log("updated user")
+	//console.log(req.body)
+	//console.log(req.body.hashtags)	
 	var newUser = new User({
 		username: req.body.username,
 		password: req.body.password, 
@@ -69,7 +72,8 @@ app.put('/api/updateUser', function (req, res){
 			res.sendStatus(400)
 		}else{
 			console.log("~~~ Updated User ~~~")
-			res.sendStatus(200)
+			res.json({success : "Saved Successfully", status : 200});
+
 		}
 
 		console.log(newUser);
@@ -133,16 +137,18 @@ if (err){
 	message = results[results.length-1]
 	if (message == 444) {
     	// wrong creds
-    	console.log("444 messager")
-    	res.sendStatus(444)
+    	console.log("444 message")
+    	res.json({success : "Check Credentials", status : 444});
     }else if(message == 443){
     	// connection issue
     	console.log("443 message")
-    	sendStatus(443)
+  	res.json({success : "Check Connection", status : 443});
+
     }else if(message == 200){
     	//success
     	console.log("200 message")
-    	res.sendStatus(200)
+    	res.json({success : "Login Successfully", status : 200});
+
     }else{
     	//console.log("any other message")
     };
@@ -256,7 +262,7 @@ app.post('/api/deleteJob', function (req, res){
 						}
 					})
 					console.log("Job deleted successfully")
-					res.send(200)
+					res.json({success : "Deleted Successfully", status : 200});
 				};
 			})
 		};
