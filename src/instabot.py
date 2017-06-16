@@ -324,8 +324,8 @@ class InstaBot:
         """ Get media ID set, by your hashtag """
 
         if (self.login_status):
-            log_string = "Get media id by tag: %s" % (tag)
-            self.write_log(log_string)
+            # log_string = "Get media id by tag: %s" % (tag)
+            # self.write_log(log_string)
             if self.login_status == 1:
                 url_tag = self.url_tag % (tag)
                 try:

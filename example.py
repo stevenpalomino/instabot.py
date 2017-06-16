@@ -4,7 +4,8 @@ import os
 import sys
 import time
 import json
-
+if 'threading' in sys.modules:
+    del sys.modules['threading']
 sys.path.append(os.path.join(sys.path[0], 'src'))
 
 from check_status import check_status
