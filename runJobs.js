@@ -80,6 +80,15 @@ var thirtyMinutesAgo = Math.round(new Date().getTime()/1000-1800)
 			console.log('updated user expiry key')
 		};
 	});
+
+	kue.Job.rangeByState( 'complete', 0, 99999, 'asc', function( err, jobs ) {
+  			  jobs.forEach( function( job ) {
+    			    job.remove( function(){
+      			      console.log( 'removed ', job.id );
+    			    });
+  			  });
+			});
+	
 	var oneUser
 	User.find({username:data.username}, function (err, person){
 		console.log('~~~one person: ')
