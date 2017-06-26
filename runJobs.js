@@ -27,13 +27,7 @@ db.once('open', function(){
 const kue = require('kue')
  , queue = kue.createQueue({jobEvents: false})
 
-var thirtyMinutesAgo = Math.round(new Date().getTime()/1000-1800)
-			kue.Job.rangeByState('queued', 0, 99999, 'asc', function(err, jobs){
-				jobs.forEach(function(job){
-				  if (job.created_at > thirtyMinutesAgo) return;
-				  job.remove();
-				})
-			})
+
 
 queue.watchStuckJobs(1000)
  queue.process('script', 3,  (job, done) => {
@@ -65,6 +59,14 @@ queue.watchStuckJobs(1000)
  })
 
  const script = (data, callback) => {
+
+var thirtyMinutesAgo = Math.round(new Date().getTime()/1000-1800)
+			kue.Job.rangeByState('queued', 0, 99999, 'asc', function(err, jobs){
+				jobs.forEach(function(job){
+				  if (job.created_at > thirtyMinutesAgo) return;
+				  job.remove();
+				})
+			})
 
  	//actual work
 	var jsonReq = data.body
