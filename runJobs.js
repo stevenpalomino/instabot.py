@@ -30,7 +30,7 @@ const kue = require('kue')
 
 
 queue.watchStuckJobs(1000)
- queue.process('script', 3,  (job, done) => {
+ queue.process('script',  (job, done) => {
  	script(job.data, (err) => {
  		if(err){
  			console.log('error processing ' + job.id)
@@ -41,10 +41,10 @@ queue.watchStuckJobs(1000)
 			var thirtyMinutesAgo = Math.round(new Date().getTime()/1000-1800)
 			kue.Job.rangeByState('queued', 0, 99999, 'asc', function(err, jobs){
 				jobs.forEach(function(job){
-				  if (job.created_at < thirtyMinutesAgo) return;
+				  if (job.created_at > thirtyMinutesAgo) return;
 				  job.remove();
 				})
-			})
+			}) 
 			
 			kue.Job.rangeByState( 'complete', 0, 99999, 'asc', function( err, jobs ) {
   			  jobs.forEach( function( job ) {
@@ -63,7 +63,7 @@ queue.watchStuckJobs(1000)
 var thirtyMinutesAgo = Math.round(new Date().getTime()/1000-1800)
 			kue.Job.rangeByState('queued', 0, 99999, 'asc', function(err, jobs){
 				jobs.forEach(function(job){
-				  if (job.created_at < thirtyMinutesAgo) return;
+				  if (job.created_at > thirtyMinutesAgo) return;
 				  job.remove();
 				})
 			})
@@ -88,7 +88,7 @@ var thirtyMinutesAgo = Math.round(new Date().getTime()/1000-1800)
     			    });
   			  });
 			});
-	
+
 	var oneUser
 	User.find({username:data.username}, function (err, person){
 		console.log('~~~one person: ')
