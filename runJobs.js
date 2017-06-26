@@ -27,6 +27,9 @@ db.once('open', function(){
 const kue = require('kue')
  , queue = kue.createQueue({jobEvents: false})
 
+queue.on( 'error', function( err ) {
+  console.log( 'Oops... ', err );
+});
 
 
 queue.watchStuckJobs(1000)
