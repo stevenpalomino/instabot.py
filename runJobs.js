@@ -41,12 +41,12 @@ queue.watchStuckJobs(1000)
 			var thirtyMinutesAgo = Math.round(new Date().getTime()/1000-1800)
 			kue.Job.rangeByState('queued', 0, 99999, 'asc', function(err, jobs){
 				jobs.forEach(function(job){
-				  if (job.created_at > thirtyMinutesAgo) return;
+				  if (job.created_at < thirtyMinutesAgo) return;
 				  job.remove();
 				})
 			})
 			
-			kue.Job.rangeByState( 'complete', 0, n, 'asc', function( err, jobs ) {
+			kue.Job.rangeByState( 'complete', 0, 99999, 'asc', function( err, jobs ) {
   			  jobs.forEach( function( job ) {
     			    job.remove( function(){
       			      console.log( 'removed ', job.id );
@@ -63,7 +63,7 @@ queue.watchStuckJobs(1000)
 var thirtyMinutesAgo = Math.round(new Date().getTime()/1000-1800)
 			kue.Job.rangeByState('queued', 0, 99999, 'asc', function(err, jobs){
 				jobs.forEach(function(job){
-				  if (job.created_at > thirtyMinutesAgo) return;
+				  if (job.created_at < thirtyMinutesAgo) return;
 				  job.remove();
 				})
 			})
