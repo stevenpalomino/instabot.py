@@ -25,9 +25,10 @@ db.once('open', function(){
 })
 
 const kue = require('kue')
- , queue = kue.createQueue()
+ , queue = kue.createQueue({jobEvents: false})
 
- queue.process('script', 10, (job, done) => {
+queue.watchStuckJobs(1000)
+ queue.process('script', 3,  (job, done) => {
  	script(job.data, (err) => {
  		if(err){
  			console.log('error processing ' + job.id)
@@ -35,6 +36,21 @@ const kue = require('kue')
  		}else{
  			console.log('Process job success ' + job.id)
  			// console.log(job.id)
+			var thirtyMinutesAgo = Math.round(new Date().getTime()/1000-1800
+			kue.Job.rangeByState('queued', 0, 99999, "asc", function(err, jobs){
+				jobs.forEach(function(job){
+				  if (job.created_at > thirtyMinutesAgo) return;
+				  job.remove();
+				})
+			})
+			
+			kue.Job.rangeByState( 'complete', 0, n, 'asc', function( err, jobs ) {
+  			  jobs.forEach( function( job ) {
+    			    job.remove( function(){
+      			      console.log( 'removed ', job.id );
+    			    });
+  			  });
+			});
  			done()
  		}
  	})
