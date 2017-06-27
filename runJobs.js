@@ -70,7 +70,24 @@ queue.watchStuckJobs(1000)
  const script = (data, callback) => {
 // ~~~~~~~~~~~~~~~~~~~~~~~ Real one ~~~~~~~~~~~~~~~~~~~~~~~~~~
 var thirtyMinutesAgo = Math.round(new Date().getTime()-1800)
+var tenMinutesAgo = Math.round(new Date().getTime()-1800)
+
 console.log(thirtyMinutesAgo)
+			kue.Job.rangeByState('active', 0, 99999, 'asc', function(err, jobs){
+				console.log('rangeByState active count')
+				console.log(jobs.length)
+				jobs.forEach(function(job){
+				  if(err){
+					console.log(err)
+				  }
+				  if (job.created_at > tenMinutesAgo){
+				    return;
+				  }else{
+				    console.log(job)
+				    job.remove();
+				  }
+				})
+			})
 			kue.Job.rangeByState('inactive', 0, 99999, 'asc', function(err, jobs){
 				console.log('rangeByState inactive count')
 				console.log(jobs.length)
