@@ -33,7 +33,7 @@ queue.on( 'error', function( err ) {
 
 
 queue.watchStuckJobs(1000)
- queue.process('script',  (job, done) => {
+ queue.process('script', 3, (job, done) => {
  	script(job.data, (err) => {
  		if(err){
  			console.log('error processing ' + job.id)
@@ -41,11 +41,17 @@ queue.watchStuckJobs(1000)
  		}else{
  			console.log('Process job success ' + job.id)
  			// console.log(job.id)
-			var thirtyMinutesAgo = Math.round(new Date().getTime()/1000-1800)
-			kue.Job.rangeByState('queued', 0, 99999, 'asc', function(err, jobs){
+			var thirtyMinutesAgo = Math.round(new Date().getTime()-1800)
+			kue.Job.rangeByState('inactive', 0, 99999, 'asc', function(err, jobs){
+				//console.log(jobs)
 				jobs.forEach(function(job){
-				  if (job.created_at > thirtyMinutesAgo) return;
-				  job.remove();
+				  //console.log(job.created_at)
+				  if (job.created_at > thirtyMinutesAgo){
+ 					return;
+				  }else{
+					console.log(job)
+				        job.remove();
+				  }
 				})
 			}) 
 			
@@ -62,12 +68,24 @@ queue.watchStuckJobs(1000)
  })
 
  const script = (data, callback) => {
-
-var thirtyMinutesAgo = Math.round(new Date().getTime()/1000-1800)
-			kue.Job.rangeByState('queued', 0, 99999, 'asc', function(err, jobs){
+// ~~~~~~~~~~~~~~~~~~~~~~~ Real one ~~~~~~~~~~~~~~~~~~~~~~~~~~
+var thirtyMinutesAgo = Math.round(new Date().getTime()-1800)
+console.log(thirtyMinutesAgo)
+			kue.Job.rangeByState('inactive', 0, 99999, 'asc', function(err, jobs){
+				console.log('rangeByState inactive count')
+				console.log(jobs.length)
+				//console.log(jobs)
 				jobs.forEach(function(job){
-				  if (job.created_at > thirtyMinutesAgo) return;
-				  job.remove();
+				//console.log(job.created_at)
+				  if(err){
+					console.log(err)
+				  }
+				  if (job.created_at > thirtyMinutesAgo){
+				    return;
+				  }else{
+				    console.log(job)
+				    job.remove();
+				  }
 				})
 			})
 
